@@ -23,10 +23,13 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
   const [selectedItemForModal, setSelectedItemForModal] = useState<MenuItem | null>(null);
 
   // Tray Builder State
-  const [trayMain, setTrayMain] = useState<MenuItem>(MENU_ITEMS[0]);
+  const defaultMain = MENU_ITEMS.find(i => i.id === 'chicken-chips-tartar') || MENU_ITEMS[0];
+  const defaultDrink = MENU_ITEMS.find(i => i.id === 'es-lemon-tea') || null;
+
+  const [trayMain, setTrayMain] = useState<MenuItem>(defaultMain);
   const [trayCarb, setTrayCarb] = useState<string>("Crinkle Cut Fries");
   const [traySauce, setTraySauce] = useState<string>("Signature Tartar Dip");
-  const [trayDrink, setTrayDrink] = useState<MenuItem>(MENU_ITEMS[9]); // Es Lemon Tea
+  const [trayDrink, setTrayDrink] = useState<MenuItem | null>(defaultDrink);
   const [trayDessert] = useState<MenuItem | null>(null);
 
   const categories = [
@@ -391,6 +394,26 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                     Step 4: Pilih Minuman Segar
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <button
+                      onClick={() => {
+                        sounds.playPop();
+                        setTrayDrink(null);
+                      }}
+                      className={`p-2 rounded-xl text-left transition-all flex items-center gap-2 border cursor-pointer ${
+                        trayDrink === null
+                          ? 'bg-neutral-200 text-neutral-900 border-white font-bold shadow-md'
+                          : 'bg-neutral-800/50 hover:bg-neutral-800 text-neutral-300 border-neutral-700'
+                      }`}
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-neutral-700 flex items-center justify-center text-sm shrink-0">
+                        🚫
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[11px] font-bold truncate">Tanpa Minum</div>
+                        <div className="text-[10px] opacity-80">Rp 0</div>
+                      </div>
+                    </button>
+
                     {MENU_ITEMS.filter(i => i.category === 'drinks').map(drink => (
                       <button
                         key={drink.id}
@@ -400,7 +423,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                         }}
                         className={`p-2 rounded-xl text-left transition-all flex items-center gap-2 border cursor-pointer ${
                           trayDrink?.id === drink.id
-                            ? 'bg-[#FFB800] text-neutral-900 border-amber-300 font-bold'
+                            ? 'bg-[#FFB800] text-neutral-900 border-amber-300 font-bold shadow-md'
                             : 'bg-neutral-800/50 hover:bg-neutral-800 text-neutral-300 border-neutral-700'
                         }`}
                       >
