@@ -8,6 +8,7 @@ import {
   Send 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { BRAND_INFO } from '../data/brandData';
 import { sounds } from '../utils/soundEffects';
 
 interface VoucherClaimModalProps {
@@ -150,7 +151,7 @@ export const VoucherClaimModal: React.FC<VoucherClaimModalProps> = ({ isOpen, on
                 onClick={() => {
                   sounds.playSuccess();
                   const message = `Halo Chick n' Chips! 👋 Saya ingin menggunakan voucher diskon *CHICKHAPPY20* untuk pesanan saya!`;
-                  window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(message)}`, '_blank');
+                  window.open(`https://wa.me/${BRAND_INFO.rawPhone}?text=${encodeURIComponent(message)}`, '_blank');
                   onClose();
                 }}
                 className="w-full py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer"

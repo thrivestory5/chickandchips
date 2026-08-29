@@ -5,6 +5,7 @@ import {
   Clock, 
   ExternalLink
 } from 'lucide-react';
+import { BRAND_INFO } from '../data/brandData';
 import { sounds } from '../utils/soundEffects';
 
 interface OrderDeliveryModalProps {
@@ -30,7 +31,7 @@ export const OrderDeliveryModal: React.FC<OrderDeliveryModalProps> = ({ isOpen, 
   const handleWhatsApp = () => {
     sounds.playSuccess();
     const msg = encodeURIComponent(`Halo Chick n' Chips! 👋 Saya ingin memesan menu untuk takeaway / delivery di outlet ${selectedCity.toUpperCase()}.`);
-    window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+    window.open(`https://wa.me/${BRAND_INFO.rawPhone}?text=${msg}`, '_blank');
   };
 
   return (

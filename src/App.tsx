@@ -14,6 +14,7 @@ import { Footer } from './components/Footer';
 import { OrderDeliveryModal } from './components/OrderDeliveryModal';
 import { FranchiseInquiryModal } from './components/FranchiseInquiryModal';
 import { VoucherClaimModal } from './components/VoucherClaimModal';
+import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ShoppingBag, Building2, Gift } from 'lucide-react';
 import { sounds } from './utils/soundEffects';
 
@@ -153,6 +154,9 @@ export function App() {
         isOpen={isVoucherModalOpen}
         onClose={() => setIsVoucherModalOpen(false)}
       />
+
+      {/* Floating WhatsApp Contact */}
+      <FloatingWhatsApp />
 
     </div>
   );

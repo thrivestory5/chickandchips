@@ -9,7 +9,7 @@ import {
   Info,
   ChevronRight
 } from 'lucide-react';
-import { MENU_ITEMS } from '../data/brandData';
+import { MENU_ITEMS, BRAND_INFO } from '../data/brandData';
 import type { MenuItem } from '../data/brandData';
 import { sounds } from '../utils/soundEffects';
 
@@ -61,7 +61,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
       (trayDessert ? `- Dessert: ${trayDessert.name}%0A` : '') +
       `%0ATotal Estimasi: Rp ${total.toLocaleString('id-ID')}%0AMohon konfirmasi pesanan saya. Terima kasih!`;
     
-    window.open(`https://wa.me/6281234567890?text=${message}`, '_blank');
+    window.open(`https://wa.me/${BRAND_INFO.rawPhone}?text=${message}`, '_blank');
   };
 
   return (

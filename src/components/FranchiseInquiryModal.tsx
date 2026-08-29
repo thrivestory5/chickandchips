@@ -8,6 +8,7 @@ import {
   TrendingUp 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { BRAND_INFO } from '../data/brandData';
 import { sounds } from '../utils/soundEffects';
 
 interface FranchiseInquiryModalProps {
@@ -56,7 +57,7 @@ export const FranchiseInquiryModal: React.FC<FranchiseInquiryModalProps> = ({ is
       `- *Status Lokasi*: ${locationStatus}%0A%0A` +
       `Mohon kirimkan Proposal Prospektus & jadwalkan sesi diskusi. Terima kasih!`;
     
-    window.open(`https://wa.me/6281234567890?text=${text}`, '_blank');
+    window.open(`https://wa.me/${BRAND_INFO.rawPhone}?text=${text}`, '_blank');
     onClose();
   };
 
