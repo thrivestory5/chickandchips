@@ -7,6 +7,7 @@ import {
   Volume2
 } from 'lucide-react';
 import { sounds } from '../utils/soundEffects';
+import { HeroDishIllustration } from './HeroDishIllustration';
 
 interface HeroProps {
   onOpenOrder: () => void;
@@ -141,23 +142,33 @@ export const Hero: React.FC<HeroProps> = ({ onOpenOrder, onOpenFranchise, onOpen
                 onClick={handleCrunchBite}
                 className="relative bg-gradient-to-b from-white to-[#FFF9F2] p-4 sm:p-5 rounded-3xl border-4 border-white shadow-2xl shadow-red-900/15 cursor-pointer group transform transition-all duration-300 hover:scale-[1.02]"
               >
-                {/* Hero Image */}
-                <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-neutral-900 shadow-inner">
+                {/* Hero Dish Visual (Vector Skillet Pan & Crispy Chicken Plate) */}
+                <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-gradient-to-br from-amber-100 to-orange-100 shadow-inner">
+                  {/* Photo Layer with automatic graceful fallback */}
                   <img 
                     src="https://images.unsplash.com/photo-1527477321055-436158a2b0a5?auto=format&fit=crop&w=1000&q=85" 
                     alt="Chick n' Chips Signature Crispy Chicken and Fries with Tartar Sauce"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    onError={(e) => {
+                      // Hide img if blocked or offline, showing the vector illustration underneath
+                      e.currentTarget.style.display = 'none';
+                    }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 relative z-10"
                   />
+
+                  {/* High Quality Illustrated Vector Plate (Always available as background/fallback) */}
+                  <div className="absolute inset-0 z-0">
+                    <HeroDishIllustration />
+                  </div>
                   
                   {/* Floating Price Tag */}
-                  <div className="absolute bottom-3 left-3 bg-[#E51B24] text-white px-3.5 py-1.5 rounded-xl font-black text-sm shadow-lg flex items-center gap-1.5">
+                  <div className="absolute bottom-3 left-3 z-20 bg-[#E51B24] text-white px-3.5 py-1.5 rounded-xl font-black text-sm shadow-lg flex items-center gap-1.5 border border-red-400">
                     <span className="text-xs text-red-200 line-through">Rp 38.000</span>
                     <span className="text-[#FFB800] text-base">Rp 20.000</span>
-                    <span className="text-[9px] bg-red-800 px-1 py-0.5 rounded uppercase">Promo</span>
+                    <span className="text-[9px] bg-red-800 px-1 py-0.5 rounded uppercase font-extrabold">Promo</span>
                   </div>
 
                   {/* Top Live Badge */}
-                  <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 border border-white/20">
+                  <div className="absolute top-3 right-3 z-20 bg-black/75 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 border border-white/20">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                     <span>100% Real Chicken Breast</span>
                   </div>

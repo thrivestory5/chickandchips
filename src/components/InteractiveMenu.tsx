@@ -296,13 +296,23 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                           sounds.playCrunch();
                           setTrayMain(item);
                         }}
-                        className={`p-3 rounded-2xl text-left transition-all flex items-center gap-3 border ${
+                        className={`p-3 rounded-2xl text-left transition-all flex items-center gap-3 border cursor-pointer ${
                           trayMain.id === item.id
                             ? 'bg-[#E51B24] text-white border-red-400 shadow-lg shadow-red-500/20'
                             : 'bg-neutral-800/60 hover:bg-neutral-800 text-neutral-300 border-neutral-700'
                         }`}
                       >
-                        <img src={item.image} alt={item.name} className="w-12 h-12 rounded-xl object-cover" />
+                        <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-amber-100 shrink-0 flex items-center justify-center">
+                          <img 
+                            src={item.image} 
+                            alt={item.name} 
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                            className="w-full h-full object-cover relative z-10" 
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center text-xl z-0">
+                            {item.illustration || "🍗"}
+                          </div>
+                        </div>
                         <div className="flex-1 min-w-0">
                           <div className="font-bold text-xs truncate">{item.name}</div>
                           <div className="text-[11px] font-mono opacity-80">Rp {item.price.toLocaleString('id-ID')}</div>
@@ -331,7 +341,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                           sounds.playPop();
                           setTrayCarb(carb.name);
                         }}
-                        className={`p-3 rounded-xl text-center text-xs font-bold transition-all border ${
+                        className={`p-3 rounded-xl text-center text-xs font-bold transition-all border cursor-pointer ${
                           trayCarb === carb.name
                             ? 'bg-amber-400 text-neutral-900 border-amber-300 shadow-md font-black'
                             : 'bg-neutral-800/50 hover:bg-neutral-800 text-neutral-300 border-neutral-700'
@@ -362,7 +372,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                           sounds.playPop();
                           setTraySauce(sauce.name);
                         }}
-                        className={`p-2.5 rounded-xl text-left text-xs transition-all border ${
+                        className={`p-2.5 rounded-xl text-left text-xs transition-all border cursor-pointer ${
                           traySauce === sauce.name
                             ? 'bg-[#E51B24] text-white border-red-400 font-bold'
                             : 'bg-neutral-800/50 hover:bg-neutral-800 text-neutral-300 border-neutral-700'
@@ -388,13 +398,23 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                           sounds.playPop();
                           setTrayDrink(drink);
                         }}
-                        className={`p-2 rounded-xl text-left transition-all flex items-center gap-2 border ${
+                        className={`p-2 rounded-xl text-left transition-all flex items-center gap-2 border cursor-pointer ${
                           trayDrink?.id === drink.id
                             ? 'bg-[#FFB800] text-neutral-900 border-amber-300 font-bold'
                             : 'bg-neutral-800/50 hover:bg-neutral-800 text-neutral-300 border-neutral-700'
                         }`}
                       >
-                        <img src={drink.image} alt={drink.name} className="w-8 h-8 rounded-lg object-cover" />
+                        <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-yellow-100 shrink-0 flex items-center justify-center">
+                          <img 
+                            src={drink.image} 
+                            alt={drink.name} 
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                            className="w-full h-full object-cover relative z-10" 
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center text-sm z-0">
+                            {drink.illustration || "🥤"}
+                          </div>
+                        </div>
                         <div className="min-w-0">
                           <div className="text-[11px] font-bold truncate">{drink.name}</div>
                           <div className="text-[10px] opacity-80">Rp {drink.price.toLocaleString('id-ID')}</div>
