@@ -91,21 +91,28 @@ export const PromotionsSection: React.FC<PromotionsSectionProps> = ({ onOpenOrde
             >
               <div>
                 {/* Visual Image Header */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">
+                <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-red-900 via-amber-900 to-neutral-950 flex items-center justify-center">
                   <img
                     src={promo.image}
                     alt={promo.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 relative z-10"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-20"></div>
                   
+                  {/* Fallback Illustration */}
+                  <div className="absolute inset-0 flex items-center justify-center text-6xl">
+                    {promo.illustration || "🎁"}
+                  </div>
+
                   {/* Badge */}
-                  <div className="absolute top-3 left-3 bg-[#FFB800] text-[#19181B] font-black text-xs px-3 py-1 rounded-full shadow-md">
-                    {promo.badge}
+                  <div className="absolute top-3 left-3 bg-[#FFB800] text-[#19181B] font-black text-xs px-3 py-1 rounded-full shadow-md z-30 flex items-center gap-1">
+                    <span>{promo.illustration || "🎁"}</span>
+                    <span>{promo.badge}</span>
                   </div>
 
                   {/* Price Tag Overlay */}
-                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <div className="absolute bottom-3 left-3 right-3 text-white z-30">
                     <div className="font-heading font-black text-lg sm:text-xl text-[#FFB800] leading-tight">
                       {promo.priceTag}
                     </div>

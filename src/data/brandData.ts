@@ -8,6 +8,7 @@ export interface MenuItem {
   tag?: string;
   calories?: string;
   image: string;
+  illustration: string; // fallback illustration emoji / icon
   isPopular?: boolean;
   isNew?: boolean;
   carbsOption?: string[];
@@ -23,6 +24,7 @@ export interface Promotion {
   description: string;
   terms: string[];
   image: string;
+  illustration: string;
   color: string;
 }
 
@@ -46,13 +48,6 @@ export interface Persona {
   traits: string[];
 }
 
-export interface FinancialMetric {
-  label: string;
-  value: string;
-  sub: string;
-  icon: string;
-}
-
 export const BRAND_INFO = {
   name: "Chick n' Chips",
   tagline: "Ayamnya Juicy, Chips-nya Happy!",
@@ -68,6 +63,7 @@ export const BRAND_INFO = {
 };
 
 export const MENU_ITEMS: MenuItem[] = [
+  // --- CORE PRODUCTS (PRODUK UTAMA) ---
   {
     id: "chicken-chips-tartar",
     name: "Chicken & Chips with Tartar Sauce",
@@ -77,6 +73,7 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "Signature crispy chicken steak keemasan dengan kentang goreng crinkle renyah, saus tartar creamy racikan spesial & perasan jeruk lemon segar.",
     tag: "⭐️ Most Favorite",
     calories: "520 kcal",
+    illustration: "🍗",
     image: "https://images.unsplash.com/photo-1527477321055-436158a2b0a5?auto=format&fit=crop&w=800&q=80",
     isPopular: true,
     carbsOption: ["Crinkle Fries", "Loaded Fries (+6k)", "Spaghetti (+3k)", "Biryani Rice (+2k)"],
@@ -87,9 +84,11 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "Chicken & Spaghetti with Cheese Sauce",
     category: "core",
     price: 29000,
-    description: "Gurihnya ayam crispy berpadu dengan pasta al dente bersiram saus keju cheddar creamy lumer yang melimpah.",
+    promoPrice: 20000,
+    description: "Gurihnya ayam crispy berpadu dengan pasta spaghetti al dente bersiram saus keju cheddar creamy lumer yang melimpah.",
     tag: "🔥 Cheesy Heaven",
     calories: "580 kcal",
+    illustration: "🍝",
     image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?auto=format&fit=crop&w=800&q=80",
     isPopular: true,
     carbsOption: ["Spaghetti", "Fettuccini", "Crinkle Fries"],
@@ -100,9 +99,11 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "Chicken & Biryani Rice with Tartar",
     category: "core",
     price: 29000,
+    promoPrice: 20000,
     description: "Perpaduan unik wangi rempah aromatik beras Basmati khas Biryani dengan steak ayam renyah juicy dan saus tartar segar.",
     tag: "🍚 Indonesian Local Pride",
     calories: "540 kcal",
+    illustration: "🍚",
     image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80",
     isPopular: true,
     carbsOption: ["Biryani Basmati", "Steam Rice", "Crinkle Fries"],
@@ -116,6 +117,7 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "Steak ayam crispy dengan taburan bumbu pedas gurih meresap, disajikan dengan crinkle fries dan cocolan saus spicy lava.",
     tag: "🌶️ Spicy Lover",
     calories: "530 kcal",
+    illustration: "🔥",
     image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80",
     isPopular: false,
     isNew: true,
@@ -123,13 +125,58 @@ export const MENU_ITEMS: MenuItem[] = [
     saucesOption: ["Spicy Lava", "Tartar Segar", "Creamy Cheese"]
   },
   {
+    id: "cheese-chicken-chips",
+    name: "Double Cheese Chicken & Chips",
+    category: "core",
+    price: 32000,
+    description: "Crispy chicken steak disiram lelehan double cheddar cheese sauce melimpah ditemani kentang goreng crinkle gurih.",
+    tag: "🧀 Double Melt",
+    calories: "590 kcal",
+    illustration: "🧀",
+    image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80",
+    isPopular: true,
+    carbsOption: ["Crinkle Fries", "Spaghetti", "Biryani Rice"],
+    saucesOption: ["Creamy Cheese", "Signature Tartar", "Smoky BBQ"]
+  },
+  {
+    id: "chicken-fettuccine-alfredo",
+    name: "Chicken & Fettuccine Alfredo Cream",
+    category: "core",
+    price: 30000,
+    description: "Pasta fettuccine lebar dengan baluran saus krim bawang putih lembut dan potongan steak ayam krispi juicy.",
+    tag: "🍝 Chef's Pick",
+    calories: "560 kcal",
+    illustration: "🥘",
+    image: "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=800&q=80",
+    isPopular: false,
+    carbsOption: ["Fettuccini", "Spaghetti", "Crinkle Fries"],
+    saucesOption: ["Alfredo Cream", "Signature Tartar", "Spicy Lava"]
+  },
+  {
+    id: "crispy-chicken-burger",
+    name: "Crispy Chicken Burger & Chips",
+    category: "core",
+    price: 28000,
+    description: "Roti brioche empuk berisi fillet ayam crispy tebal, selada segar, keju cheddar, saus tartar spesial, dan chips.",
+    tag: "🍔 Big Bite",
+    calories: "570 kcal",
+    illustration: "🍔",
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+    isPopular: true,
+    carbsOption: ["Crinkle Fries", "Loaded Fries (+6k)"],
+    saucesOption: ["Signature Tartar", "Smoky BBQ", "Creamy Cheese"]
+  },
+
+  // --- COMBOS & PROMOS (PAKET HEMAT) ---
+  {
     id: "combo-happy-box",
     name: "Combo Happy Box (Chicken + Chips + Drink)",
     category: "combos",
     price: 38000,
-    description: "Paket lengkap kenyang: 1 Crispy Chicken Steak, 1 Porsi French Fries Gurih, 1 Saus Pilihan, dan 1 Cup Es Lemon Tea / Es Teh Manis Segar.",
+    description: "Paket lengkap kenyang: 1 Crispy Chicken Steak, 1 Porsi French Fries Gurih, 1 Saus Pilihan, dan 1 Cup Es Lemon Tea Segar.",
     tag: "👑 Best Value Combo",
     calories: "650 kcal",
+    illustration: "🎁",
     image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=800&q=80",
     isPopular: true,
     carbsOption: ["Crinkle Fries", "Spaghetti Aglio", "Biryani Rice"],
@@ -143,9 +190,24 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "Paket hemat berdua: 1 Chicken 'n Pasta + 1 Chicken 'n Rice + 2 Minuman Lychee Tea Segar. Paling pas buat ngedate & hangout!",
     tag: "👫 Duo Feast",
     calories: "1080 kcal (2 pax)",
+    illustration: "❤️",
     image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
     isPopular: true
   },
+  {
+    id: "combo-family-platter",
+    name: "Family Happy Platter (4-5 Pax)",
+    category: "combos",
+    price: 110000,
+    description: "Pesta ayam crispy keluarga: 3 Chicken Steaks, 2 Porsi Pasta/Rice, 2 Crinkle Fries, 6 Nuggets, 4 Saus Dip, dan 4 Es Teh Manis.",
+    tag: "👨‍👩‍👧‍👦 Family Feast",
+    calories: "2100 kcal",
+    illustration: "🎉",
+    image: "https://images.unsplash.com/photo-1514944298352-78d1222e4ebc?auto=format&fit=crop&w=800&q=80",
+    isPopular: true
+  },
+
+  // --- SIDES & SNACKS ---
   {
     id: "loaded-fries-bbq",
     name: "Loaded Fries Smoked Cheese BBQ",
@@ -154,16 +216,29 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "Kentang goreng renyah keemasan disiram saus keju cheddar leleh, saus BBQ asap, dan taburan parsley aromatic.",
     tag: "🍟 Must-Try Side",
     calories: "340 kcal",
+    illustration: "🍟",
     image: "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=800&q=80",
     isPopular: true
+  },
+  {
+    id: "extra-crinkle-fries",
+    name: "Extra Crinkle Cut Fries Classic",
+    category: "sides",
+    price: 12000,
+    description: "Kentang goreng potongan gerigi crinkle renyah keemasan bertabur garam bumbu gurih khas Chick n' Chips.",
+    tag: "🍟 Classic Chips",
+    calories: "280 kcal",
+    illustration: "🍟",
+    image: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "crispy-chicken-nuggets",
     name: "Crispy Golden Nuggets (6 Pcs)",
     category: "sides",
     price: 17000,
-    description: "6 potong nugget ayam renyah di luar, lembut di dalam dengan pilihan saus tartar atau saus keju leleh.",
+    description: "6 potong nugget ayam renyah di luar, juicy di dalam dengan pilihan saus tartar atau saus keju leleh.",
     calories: "290 kcal",
+    illustration: "🍗",
     image: "https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -171,10 +246,33 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "Popcorn Chicken Bites",
     category: "sides",
     price: 16000,
-    description: "Potongan daging ayam dadu crispy dengan rempah gurih crunchy. Cocok untuk cemilan santai.",
+    description: "Potongan daging ayam dadu crispy dengan rempah gurih crunchy. Cemilan asik teman nongkrong.",
     calories: "310 kcal",
+    illustration: "🍿",
     image: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=800&q=80"
   },
+  {
+    id: "extra-biryani-rice",
+    name: "Extra Biryani Rice (Basmati)",
+    category: "sides",
+    price: 10000,
+    description: "Satu porsi nasi biryani beras Basmati wangi rempah aromatik khas timur tengah.",
+    calories: "210 kcal",
+    illustration: "🍚",
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "extra-sauce-duo",
+    name: "Duo Signature Dip Cup (Tartar & Cheese)",
+    category: "sides",
+    price: 8000,
+    description: "Paket 2 cangkir saus cocolan: Signature Tartar segar lemon & Creamy Cheddar Cheese lezat.",
+    calories: "120 kcal",
+    illustration: "🥣",
+    image: "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?auto=format&fit=crop&w=800&q=80"
+  },
+
+  // --- BEVERAGES (MINUMAN SEGAR) ---
   {
     id: "es-lemon-tea",
     name: "Es Lemon Tea Segar",
@@ -183,8 +281,20 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "Seduhan teh segar dingin dengan perasan buah lemon asli. Rasa manis dan asam yang menyejukkan tenggorokan.",
     tag: "🍋 Fresh Sensation",
     calories: "85 kcal",
+    illustration: "🍋",
     image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80",
     isPopular: true
+  },
+  {
+    id: "es-teh-manis",
+    name: "Es Teh Manis Melati Dingin",
+    category: "drinks",
+    price: 8000,
+    description: "Teh melati seduh wangi manis dingin segar khas racikan otentik Chick n' Chips.",
+    tag: "🥤 Classic Sweet",
+    calories: "60 kcal",
+    illustration: "🥤",
+    image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "lychee-tea-delight",
@@ -192,7 +302,9 @@ export const MENU_ITEMS: MenuItem[] = [
     category: "drinks",
     price: 18000,
     description: "Teh melati dingin harum berpadu sirup leci premium dan buah leci segar utuh.",
+    tag: "🍹 Sweet Fruity",
     calories: "110 kcal",
+    illustration: "🍹",
     image: "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -202,17 +314,32 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 16000,
     description: "Teh Thailand autentik bercampur susu kental manis dan evaporated milk yang creamy mantap.",
     calories: "140 kcal",
+    illustration: "🧋",
     image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "ice-matcha-latte",
-    name: "Ice Matcha Latte",
+    name: "Ice Matcha Latte Creamy",
     category: "drinks",
     price: 20000,
-    description: "Matcha bubuk premium berpadu susu segar dingin yang creamy dan menenangkan.",
+    description: "Matcha bubuk premium jepang berpadu susu segar dingin yang creamy dan menenangkan.",
+    tag: "🍵 Japanese Matcha",
     calories: "160 kcal",
+    illustration: "🍵",
     image: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80"
   },
+  {
+    id: "milk-kocok-shake",
+    name: "Milk Kocok Vanilla / Choco Shake",
+    category: "drinks",
+    price: 18000,
+    description: "Susu kocok dingin berbusa creamy manis pas dengan pilihan rasa Vanilla Madagascar atau Belgian Choco.",
+    calories: "190 kcal",
+    illustration: "🥛",
+    image: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80"
+  },
+
+  // --- DESSERTS & ICE CREAMS ---
   {
     id: "chick-cone-icecream",
     name: "Chick Cone Soft Serve Ice Cream",
@@ -221,6 +348,7 @@ export const MENU_ITEMS: MenuItem[] = [
     description: "Es krim soft-serve lembut rasa matcha / vanilla di atas waffle cone renyah manis.",
     tag: "🍦 Kid's Favorite",
     calories: "150 kcal",
+    illustration: "🍦",
     image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=800&q=80",
     isPopular: true
   },
@@ -230,8 +358,20 @@ export const MENU_ITEMS: MenuItem[] = [
     category: "desserts",
     price: 12000,
     description: "Es krim cup lembut dengan lelehan saus cokelat/stroberi dan buah cherry manis segar di puncaknya.",
+    tag: "🍒 Sweet Sundae",
     calories: "190 kcal",
+    illustration: "🍨",
     image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "chick-sundae-double",
+    name: "Double Scoop Sundae (Matcha & Choco)",
+    category: "desserts",
+    price: 15000,
+    description: "Kombinasi 2 scoop es krim matcha & cokelat lumer bertabur choco crunch dan buah ceri.",
+    calories: "240 kcal",
+    illustration: "🍧",
+    image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
@@ -243,6 +383,7 @@ export const PROMOTIONS: Promotion[] = [
     priceTag: "HANYA Rp 20.000 (Semua Menu Utama)",
     description: "Rayakan pembukaan outlet baru Chick n' Chips! Dapatkan menu favorit Chicken & Chips, Chicken & Pasta, atau Chicken & Rice hanya 20rb seharian penuh!",
     terms: ["Berlaku untuk Dine-in & Takeaway", "1 Transaksi max 2 porsi", "Berlaku selama periode grand opening"],
+    illustration: "🎉",
     image: "https://images.unsplash.com/photo-1527477321055-436158a2b0a5?auto=format&fit=crop&w=800&q=80",
     color: "from-red-600 to-amber-500"
   },
@@ -254,6 +395,7 @@ export const PROMOTIONS: Promotion[] = [
     priceTag: "GRATIS ES LEMON TEA SEGAR!",
     description: "Sore-sore santai makin happy! Pesan menu makanan favoritmu di jam 3 sampai 5 sore, langsung dapat GRATIS 1 gelas Es Lemon Tea Dingin menyegarkan.",
     terms: ["Berlaku setiap hari Senin - Jumat", "Minimal transaksi 1 menu makanan", "Dine-in dan Takeaway"],
+    illustration: "🍋",
     image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80",
     color: "from-amber-500 to-orange-500"
   },
@@ -264,6 +406,7 @@ export const PROMOTIONS: Promotion[] = [
     priceTag: "HANYA Rp 50.000 / 2 Pax",
     description: "Makan kenyang berdua tanpa bikin dompet nangis. Sudah termasuk 1 Chicken 'n Pasta + 1 Chicken 'n Rice + 2 Gelas Minuman Segar Lychee Tea!",
     terms: ["Berlaku setiap hari", "Termasuk 2 porsi main course + 2 minuman", "Bisa dinikmati dine-in atau takeaway"],
+    illustration: "👫",
     image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
     color: "from-red-500 to-rose-600"
   }
@@ -381,8 +524,8 @@ export const FINANCIAL_DECK_DATA = {
   avgBundlingPrice: 38000,
   avgAlaCartePrice: 29000,
   avgDrinkPrice: 15000,
-  salesMixBundlingRatio: 0.70, // 70% bundling
-  salesMixAlaCarteRatio: 0.30, // 30% ala carte
+  salesMixBundlingRatio: 0.70,
+  salesMixAlaCarteRatio: 0.30,
   monthlyRevenue: 310440000,
   cogsFoodPercent: 42,
   cogsDrinkPercent: 24,
@@ -427,11 +570,3 @@ export const FOUNDER_INFO = {
     "Profit & Loss (P&L) Financial Modeling"
   ]
 };
-
-export const COMPETITOR_DATA = [
-  { name: "Chick n' Chips", priceLevel: "Affordable (Rp 29k-38k)", uniqueness: "Modern Crispy Chicken Steak & Gourmet Chips", localTaste: "⭐️⭐️⭐️⭐️⭐️ (Tinggi)", speed: "< 5 Menit", margin: "18.1% Net Margin", sweetSpot: true },
-  { name: "KFC / McDonald's", priceLevel: "High / Premium (Rp 55k+)", uniqueness: "Global Fast Food (General Fried Chicken / Burger)", localTaste: "⭐️⭐️⭐️ (Standar Global)", speed: "5-10 Menit", margin: "10-15%", sweetSpot: false },
-  { name: "Ayam Geprek / Bensu", priceLevel: "Low (Rp 18k-25k)", uniqueness: "Traditional Spicy Smashed Chicken (Saturated)", localTaste: "⭐️⭐️⭐️⭐️⭐️ (Lokal)", speed: "10-15 Menit", margin: "8-12%", sweetSpot: false },
-  { name: "Richeese Factory", priceLevel: "Medium-High (Rp 40k-50k)", uniqueness: "Spicy Fried Chicken with Cheese Dip", localTaste: "⭐️⭐️⭐️⭐️ (Pedas Keju)", speed: "8-12 Menit", margin: "12-16%", sweetSpot: false },
-  { name: "Street Food Gerobak", priceLevel: "Very Low (Rp 10k-15k)", uniqueness: "Fried Chicken biasa tanpa branding / variasi", localTaste: "⭐️⭐️⭐️ (Bervariasi)", speed: "Instan / Goreng Ulang", margin: "Rendah & Inkonsisten", sweetSpot: false }
-];

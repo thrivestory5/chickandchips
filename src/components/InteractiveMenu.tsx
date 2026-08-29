@@ -114,20 +114,43 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
               key={item.id}
               className="bg-white rounded-3xl overflow-hidden border-2 border-neutral-100 hover:border-amber-300 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group"
             >
-              {/* Card Image */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">
+              {/* Card Image with Illustration Badge & Fallback */}
+              <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-amber-100 via-orange-50 to-red-100">
                 <img
                   src={item.image}
                   alt={item.name}
+                  loading="lazy"
+                  onError={(e) => {
+                    // Fallback to illustration card if image fails
+                    const target = e.currentTarget;
+                    target.style.display = 'none';
+                    const fallback = target.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                
-                {/* Badges */}
-                {item.tag && (
-                  <div className="absolute top-3 left-3 bg-[#E51B24] text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md">
-                    {item.tag}
+
+                {/* Fallback Illustration View (Hidden unless error or loading) */}
+                <div 
+                  className="absolute inset-0 hidden flex-col items-center justify-center bg-gradient-to-br from-amber-100 via-orange-100 to-red-100 text-center p-4"
+                >
+                  <div className="text-5xl mb-2 filter drop-shadow-md animate-bounce">
+                    {item.illustration || "🍗"}
                   </div>
-                )}
+                  <span className="font-heading font-black text-sm text-neutral-800">
+                    {item.name}
+                  </span>
+                  <span className="text-[10px] font-bold text-amber-700 mt-1 bg-white/80 px-2 py-0.5 rounded-full">
+                    Chick n' Chips Original Recipe
+                  </span>
+                </div>
+                
+                {/* Floating Illustration Badge */}
+                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md text-[#19181B] text-xs font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1.5 border border-amber-200">
+                  <span className="text-sm">{item.illustration || "🍗"}</span>
+                  {item.tag && <span className="text-[10px] text-[#E51B24] font-extrabold">{item.tag}</span>}
+                </div>
+
                 {item.calories && (
                   <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white/90 text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20">
                     {item.calories}
@@ -140,7 +163,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                     sounds.playCrunch();
                     setTrayMain(item);
                   }}
-                  className="absolute bottom-3 right-3 bg-[#FFB800] hover:bg-[#ffa700] text-[#19181B] px-3 py-1.5 rounded-xl font-extrabold text-xs shadow-lg flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-200"
+                  className="absolute bottom-3 right-3 bg-[#FFB800] hover:bg-[#ffa700] text-[#19181B] px-3 py-1.5 rounded-xl font-extrabold text-xs shadow-lg flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-200 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" /> Pilih ke Tray
                 </button>
@@ -402,9 +425,21 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                     
                     {/* Visual Plate Item 1: Main */}
                     <div className="flex items-center gap-3 p-2.5 rounded-xl bg-orange-50/70 border border-orange-200">
-                      <img src={trayMain.image} alt={trayMain.name} className="w-14 h-14 rounded-xl object-cover shrink-0" />
+                      <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-amber-100 shrink-0">
+                        <img 
+                          src={trayMain.image} 
+                          alt={trayMain.name} 
+                          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                          className="w-full h-full object-cover" 
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center text-2xl">
+                          {trayMain.illustration || "🍗"}
+                        </div>
+                      </div>
                       <div className="flex-1 min-w-0">
-                        <span className="text-[10px] font-extrabold text-[#E51B24] uppercase">Main Dish</span>
+                        <span className="text-[10px] font-extrabold text-[#E51B24] uppercase flex items-center gap-1">
+                          <span>{trayMain.illustration || "🍗"}</span> Main Dish
+                        </span>
                         <div className="font-heading font-black text-sm text-neutral-900 truncate">{trayMain.name}</div>
                         <div className="text-xs font-mono text-neutral-600">Rp {trayMain.price.toLocaleString('id-ID')}</div>
                       </div>
@@ -425,9 +460,21 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
                     {/* Visual Plate Item 3: Drink */}
                     {trayDrink && (
                       <div className="flex items-center gap-3 p-2.5 rounded-xl bg-yellow-50/70 border border-yellow-200">
-                        <img src={trayDrink.image} alt={trayDrink.name} className="w-10 h-10 rounded-xl object-cover shrink-0" />
+                        <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-yellow-100 shrink-0">
+                          <img 
+                            src={trayDrink.image} 
+                            alt={trayDrink.name} 
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                            className="w-full h-full object-cover" 
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center text-lg">
+                            {trayDrink.illustration || "🥤"}
+                          </div>
+                        </div>
                         <div className="flex-1 min-w-0">
-                          <span className="text-[10px] font-extrabold text-yellow-700 uppercase">Minuman</span>
+                          <span className="text-[10px] font-extrabold text-yellow-700 uppercase flex items-center gap-1">
+                            <span>{trayDrink.illustration || "🥤"}</span> Minuman
+                          </span>
                           <div className="font-heading font-bold text-xs text-neutral-900 truncate">{trayDrink.name}</div>
                           <div className="text-[11px] font-mono text-neutral-600">Rp {trayDrink.price.toLocaleString('id-ID')}</div>
                         </div>
@@ -467,11 +514,20 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({ onOpenOrder })
       {selectedItemForModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border-4 border-amber-200 animate-in zoom-in-95 duration-200">
-            <div className="relative aspect-video">
-              <img src={selectedItemForModal.image} alt={selectedItemForModal.name} className="w-full h-full object-cover" />
+            <div className="relative aspect-video bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+              <img 
+                src={selectedItemForModal.image} 
+                alt={selectedItemForModal.name} 
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className="w-full h-full object-cover relative z-10" 
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-6xl mb-1 filter drop-shadow">{selectedItemForModal.illustration || "🍗"}</span>
+                <span className="font-heading font-black text-xs text-amber-800">Chick n' Chips Signature</span>
+              </div>
               <button
                 onClick={() => setSelectedItemForModal(null)}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/70 text-white flex items-center justify-center font-bold hover:bg-black"
+                className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/70 text-white flex items-center justify-center font-bold hover:bg-black cursor-pointer"
               >
                 ✕
               </button>
