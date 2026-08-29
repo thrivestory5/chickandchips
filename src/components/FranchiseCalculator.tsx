@@ -33,24 +33,24 @@ export const FranchiseCalculator: React.FC<FranchiseCalculatorProps> = ({ onOpen
   const calculatedPaybackYears = totalInvestment / calculatedAnnualNetProfit;
 
   return (
-    <section id="franchise-roi" className="py-20 bg-gradient-to-b from-white via-neutral-900 to-neutral-950 text-white relative overflow-hidden">
+    <section id="franchise-roi" className="py-24 bg-[#121114] text-white relative overflow-hidden">
       
       {/* Background Glows */}
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#E51B24]/15 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-10 left-0 w-[450px] h-[450px] bg-[#FFB800]/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#E51B24]/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-10 left-0 w-[450px] h-[450px] bg-[#FFB800]/15 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-900/60 border border-red-500/30 text-red-400 font-extrabold text-xs tracking-wider uppercase mb-3 backdrop-blur-sm">
-            <TrendingUp className="w-3.5 h-3.5 text-[#FFB800]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E51B24]/20 border border-[#E51B24]/40 text-[#FFB800] font-black text-xs tracking-wider uppercase mb-4 shadow-sm">
+            <TrendingUp className="w-4 h-4 text-[#FFB800]" />
             <span>Financial Projections & Business Model</span>
           </div>
           <h2 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tight">
             Peluang Bisnis & <span className="text-[#FFB800]">Simulasi ROI Kemitraan</span>
           </h2>
-          <p className="text-neutral-400 text-base sm:text-lg mt-3 font-medium">
+          <p className="text-neutral-300 text-base sm:text-lg mt-3 font-medium leading-relaxed max-w-2xl mx-auto">
             Transparansi finansial berbasis kapasitas outlet 80 kursi. Model bisnis scalable dengan gross margin 60% dan ROI tahunan menarik hingga 37.5%!
           </p>
         </div>
